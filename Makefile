@@ -51,6 +51,10 @@ bin/$(MODULE): $(C) $(H) $(CP) $(HP)
 	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
 
 # doc
+.PHONY: doxy
+doxy: .doxygen
+	rm -rf docs ; doxygen $< 1>/dev/null
+
 .PHONY: doc
 doc: \
 	doc/JS/ECMA-262_1st_edition_june_1997.pdf \

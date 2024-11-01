@@ -1,6 +1,6 @@
 PROJECT_NAME           = "jc"
 PROJECT_BRIEF          = "JavaScript compiler"
-PROJECT_LOGO           = vscode/logo.png
+PROJECT_LOGO           = doc/logo.png
 HTML_OUTPUT            = docs
 OUTPUT_DIRECTORY       =
 INPUT                  = README.md src inc
