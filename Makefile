@@ -11,10 +11,13 @@ run: install
 # doc
 .PHONY: doc
 doc: \
-	doc/JS/ECMA-262_1st_edition_june_1997.pdf
+	doc/JS/ECMA-262_1st_edition_june_1997.pdf \
+	doc/OCaml/cs3110_ocaml_programming.pdf
 
 doc/JS/ECMA-262_1st_edition_june_1997.pdf:
 	$(CURL) $@ https://ecma-international.org/wp-content/uploads/ECMA-262_1st_edition_june_1997.pdf
+doc/OCaml/cs3110_ocaml_programming.pdf:
+	$(CURL) $@ https://cs3110.github.io/textbook/ocaml_programming.pdf
 
 # install
 .PHONY: install update ref gz
