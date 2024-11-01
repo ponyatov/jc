@@ -71,10 +71,14 @@ install: $(OPAM) doc ref gz
 update:
 	sudo apt update
 	sudo apt upgrade -uy `cat apt.txt`
-ref:
+ref: \
+	ref/microrl/README.md
 gz:
 
 $(OPAM):
 	bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
 	$(OPAM) init -y
 	$(OPAM) install -y dune utop ocaml-lsp-server ocamlformat
+
+ref/microrl/README.md:
+    git clone git@github.com:ponyatov/microrl.git ref/microrl

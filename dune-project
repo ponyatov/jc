@@ -5,7 +5,7 @@
 (generate_opam_files true)
 (package
   (name jc)
-  (synopsis "JavaScript compiler")
-  (description "A longer description")
+  (synopsis "JavaScript AOT compiler")
+  (description "JET compiler")
   (depends ocaml dune utop ocaml-lsp-server ocamlformat)
 )

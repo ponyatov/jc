@@ -1,16 +1,17 @@
 open Printf
 
 let m = "jc"
-let about = "JavaScript compiler"
+let about = "JavaScript AOT compiler"
 
 let incl cpp hpp =
   let _c = fprintf cpp in
   let h = fprintf hpp in
   fprintf cpp "#include \"%s.hpp\"\n" m;
   "/// @file\n" |> h;
-  fprintf hpp "/// @brief `module: %s`\n" m;
+  fprintf hpp "/// @brief `%s:` %s\n" m about;
   "#pragma once\n\n" |> h;
-  fprintf hpp "/// @defgroup %s %s\n/// @{\n" m m
+  fprintf hpp "/// @defgroup %s %s\n" m m;
+  fprintf hpp "/// @brief %s\n/// @{\n" about
 
 let libc cpp hpp =
   let _c = fprintf cpp in
@@ -31,7 +32,12 @@ let main cpp hpp =
   "
 /// @defgroup main main
 /// @{
+
+/// @brief POSIX entry point
+/// @param[in] argc number of command line arguments
+/// @param[in] argv values (0 = binary program file)
 int main(int argc, char *argv[]);
+/// @brief print command line argument
 void arg(int argc, char *argv);
 /// @}
 "
@@ -56,8 +62,8 @@ let doxy =
 PROJECT_LOGO           = doc/logo.png
 HTML_OUTPUT            = docs
 OUTPUT_DIRECTORY       =
-INPUT                  = README.md src inc
-EXCLUDE                = ref/*
+INPUT                  = README.md doc src inc
+EXCLUDE                = ref/* *.pdf *.djvu
 WARN_IF_UNDOCUMENTED   = NO
 RECURSIVE              = YES
 USE_MDFILE_AS_MAINPAGE = README.md
@@ -68,6 +74,7 @@ EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = YES
 LAYOUT_FILE            = doc/DoxygenLayout.xml
 SORT_GROUP_NAMES       = YES
+REPEAT_BRIEF           = NO
 "
   |> d;
   doxy |> close_out
