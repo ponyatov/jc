@@ -5,8 +5,8 @@ OPAM = $(HOME)/bin/opam
 # all
 .PHONY: all run
 all:
-run:
-	$(MAKE) install
+run: install
+	$(OPAM) init
 
 # install
 .PHONY: install update ref gz
@@ -18,5 +18,5 @@ ref:
 gz:
 
 $(OPAM):
-	BINDIR=$(HOME)/bin \
-		bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
+	bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
+	$(OPAM) init
