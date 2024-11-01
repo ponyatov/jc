@@ -14,6 +14,9 @@ J += $(wildcard lib/*.js)
 M += $(wildcard src/*.ml*)
 D += $(wildcard src/dune*) dune* .ocaml*
 
+# cfg
+CFLAGS += -Iinc -Itmp -ggdb -O0
+
 # all
 .PHONY: all run
 all: $(M) $(D) $(J)
