@@ -81,4 +81,4 @@ $(OPAM):
 	$(OPAM) install -y dune utop ocaml-lsp-server ocamlformat
 
 ref/microrl/README.md:
-    git clone git@github.com:ponyatov/microrl.git ref/microrl
+    git clone -o gh git@github.com:ponyatov/microrl.git ref/microrl
