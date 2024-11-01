@@ -1,5 +1,5 @@
 /// @file
-/// @brief module: jc
+/// @brief `module: jc`
 #pragma once
 
 /// @defgroup jc jc

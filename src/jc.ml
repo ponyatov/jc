@@ -8,7 +8,7 @@ let incl cpp hpp =
   let h = fprintf hpp in
   fprintf cpp "#include \"%s.hpp\"\n" m;
   "/// @file\n" |> h;
-  fprintf hpp "/// @brief module: %s\n" m;
+  fprintf hpp "/// @brief `module: %s`\n" m;
   "#pragma once\n\n" |> h;
   fprintf hpp "/// @defgroup %s %s\n/// @{\n" m m
 
