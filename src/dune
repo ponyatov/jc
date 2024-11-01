@@ -1,0 +1,6 @@
+(executable
+ (name jc)
+ (public_name jc)
+ (modules jc)
+ ; (libraries)
+ )

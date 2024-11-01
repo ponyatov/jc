@@ -1,1 +1,6 @@
+*~
+*.swp
+*.log
+/docs/
+/_build/
 !.gitignore

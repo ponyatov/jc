@@ -1,6 +1,11 @@
+# var
+MODULE = $(notdir $(CURDIR))
+
 # tool
 CURL = curl -L -o
+CF   = clang-format -style=file -i
 OPAM = $(HOME)/bin/opam
+DUNE = $(HOME)/.opam/default/bin/dune
 
 # src
 C += $(wildcard src/*.c*)
@@ -11,14 +16,24 @@ D += $(wildcard src/dune*) dune* .ocaml*
 
 # all
 .PHONY: all run
-all:
-run: install
-	$(OPAM) install -y dune utop ocaml-lsp-server ocamlformat
+all: $(M) $(D) $(J)
+run: $(M) $(D) $(J)
+	dune exec src/$(MODULE).exe -- $(J)
+
+.PHONY: cpp
+cpp: bin/$(MODULE) $(J)
+	$^
 
 # format
 .PHONY: format
-format: tmp/format_ml
-tmp/format_ml: .ocamlformat
+format: tmp/format_ml tmp/format_cpp tmp/format_js
+tmp/format_ml: $(M) $(D) .ocamlformat
+	dune build @fmt --auto-promote && touch $@
+tmp/format_cpp: $(C) $(H)
+	$(CF) $? && touch $@
+tmp/format_js: $(J)
+	$(CF) $? && touch $@
+
 .ocamlformat:
 	echo "version=$(shell ocamlformat --version)"  > $@
 	echo "profile=default"                        >> $@
@@ -27,6 +42,10 @@ tmp/format_ml: .ocamlformat
 	echo "break-cases=all"                        >> $@
 	echo "wrap-comments=true"                     >> $@
 	echo "break-string-literals=never"            >> $@
+
+# rule
+bin/$(MODULE): $(C) $(H) $(CP) $(HP)
+	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
 
 # doc
 .PHONY: doc

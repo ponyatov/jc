@@ -1,0 +1,11 @@
+(lang dune 3.16)
+(name jc)
+(authors "Dmitry Ponyatov <dponyatov@gmail.com>")
+(license MIT)
+(generate_opam_files true)
+(package
+  (name jc)
+  (synopsis "JavaScript compiler")
+  (description "A longer description")
+  (depends ocaml dune utop ocaml-lsp-server ocamlformat)
+)

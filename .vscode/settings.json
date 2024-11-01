@@ -20,8 +20,8 @@
 
     // files
     "files.exclude": {
-        // "_build/**": true,
-        // "docs": true,
+        "_build": true,
+        "docs": true,
     },
     "files.watcherExclude": {
         "ref/**": true,
@@ -45,8 +45,29 @@
     "terminal.integrated.copyOnSelection": true,
     // "editor.inlayHints.enabled": "offUnlessPressed",
 
+    // clang-format
+    "clang-format.executable":     "clang-format",
+    "clang-format.fallbackStyle":  "Google",
+    "clang-format.style":          "file",
+
+    // OCaml
+    "[ocaml]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true
+    },
+    "[ocaml.interface]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true
+    },
+
+    // JavaScript
+    "[js]": {
+        "editor.defaultFormatter": "xaver.clang-format",
+        "editor.formatOnSave":     true
+    },
+
     // C++
-    "[cpp]": {
+    "[c,cpp]": {
         "editor.defaultFormatter": "xaver.clang-format",
         "editor.formatOnSave":     true
     },
