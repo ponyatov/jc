@@ -1,3 +1,5 @@
+(* minimal C++ code generation *)
+
 open Printf
 
 let m = "jc"
