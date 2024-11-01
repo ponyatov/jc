@@ -2,11 +2,31 @@
 CURL = curl -L -o
 OPAM = $(HOME)/bin/opam
 
+# src
+C += $(wildcard src/*.c*)
+H += $(wildcard inc/*.h*)
+J += $(wildcard lib/*.js)
+M += $(wildcard src/*.ml*)
+D += $(wildcard src/dune*) dune* .ocaml*
+
 # all
 .PHONY: all run
 all:
 run: install
 	$(OPAM) install -y dune utop ocaml-lsp-server ocamlformat
+
+# format
+.PHONY: format
+format: tmp/format_ml
+tmp/format_ml: .ocamlformat
+.ocamlformat:
+	echo "version=$(shell ocamlformat --version)"  > $@
+	echo "profile=default"                        >> $@
+	echo "margin=80"                              >> $@
+	echo "line-endings=lf"                        >> $@
+	echo "break-cases=all"                        >> $@
+	echo "wrap-comments=true"                     >> $@
+	echo "break-string-literals=never"            >> $@
 
 # doc
 .PHONY: doc
