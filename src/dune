@@ -4,3 +4,10 @@
  (modules jc)
  ; (libraries)
  )
+
+(executable
+ (name cgen)
+ (public_name cgen)
+ (modules cgen)
+ ; (libraries)
+ )

@@ -1,0 +1,4 @@
+(env
+ (dev
+  (flags
+   (-warn-error "-unused-value-declaration"))))
