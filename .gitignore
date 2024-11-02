@@ -3,4 +3,5 @@
 *.log
 /docs/
 /*build/
+/sdkconfig.old
 !.gitignore

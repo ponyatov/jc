@@ -1,12 +1,19 @@
 # var
 MODULE = $(notdir $(CURDIR))
 
+# dir
+CWD = $(CURDIR)
+BIN = $(CWD)/bin
+TMP = $(CWD)/tmp
+CAR = $(HOME)/.cargo
+
 # tool
-CURL  = curl -L -o
-CF    = clang-format -style=file -i
-OPAM  = $(HOME)/bin/opam
-DUNE  = $(HOME)/.opam/default/bin/dune
-IDFPY = $(IDF_PATH)/tools/idf.py
+CURL   = curl -L -o
+CF     = clang-format -style=file -i
+OPAM   = $(HOME)/bin/opam
+DUNE   = $(HOME)/.opam/default/bin/dune
+IDFPY  = $(IDF_PATH)/tools/idf.py
+RUSTUP = $(CAR)/bin/rustup
 
 # src
 C += $(wildcard src/*.c*)
@@ -72,19 +79,23 @@ doxy: .doxygen
 .PHONY: doc
 doc: \
 	doc/JS/ECMA-262_1st_edition_june_1997.pdf \
-	doc/OCaml/cs3110_ocaml_programming.pdf
+	doc/OCaml/cs3110_ocaml_programming.pdf \
+	doc/Rust/rustbook_ru.pdf
 
 doc/JS/ECMA-262_1st_edition_june_1997.pdf:
 	$(CURL) $@ https://ecma-international.org/wp-content/uploads/ECMA-262_1st_edition_june_1997.pdf
 doc/OCaml/cs3110_ocaml_programming.pdf:
 	$(CURL) $@ https://cs3110.github.io/textbook/ocaml_programming.pdf
+doc/Rust/rustbook_ru.pdf:
+	$(CURL) $@ https://raw.githubusercontent.com/kgv/rust_book_ru/gh-pages/converted/rustbook.pdf
 
 # install
 .PHONY: install update ref gz
-install: $(OPAM) doc ref gz
-update:
+install: $(OPAM) doc ref gz $(RUSTUP)
+update: $(RUSTUP)
 	sudo apt update
 	sudo apt upgrade -uy `cat apt.txt`
+	$< update
 ref: \
 	ref/microrl/README.md
 gz:
@@ -93,6 +104,9 @@ $(OPAM):
 	bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
 	$(OPAM) init -y
 	$(OPAM) install -y dune utop ocaml-lsp-server ocamlformat
+
+$(RUSTUP):
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ref/microrl/README.md:
     git clone -o gh git@github.com:ponyatov/microrl.git ref/microrl

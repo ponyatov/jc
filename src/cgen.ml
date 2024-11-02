@@ -108,6 +108,14 @@ g++ flex bison libreadline-dev ragel
 cmake
 "
 
+let sdkconfig =
+  fprintf (open_out "sdkconfig")
+    "
+CONFIG_APP_BUILD_TYPE_RAM=y
+CONFIG_APP_BUILD_TYPE_PURE_RAM_APP=y
+CONFIG_APP_NO_BLOBS=y
+"
+
 let _ =
   let cpp = open_out (sprintf "src/%s.cpp" m) in
   let hpp = open_out (sprintf "inc/%s.hpp" m) in
@@ -118,4 +126,5 @@ let _ =
   hpp |> close_out;
   doxy;
   cmake;
-  apt
+  apt;
+  sdkconfig
