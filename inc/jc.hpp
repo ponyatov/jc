@@ -15,6 +15,7 @@
 #include <iostream>
 #include <sstream>
 #include <list>
+#include <bitset>
 /// @}
 
 /// @defgroup main main
@@ -89,7 +90,7 @@ class Oct : public Int {
 class Bin : public Int {
    public:
     Bin(std::string V) : Int(stol(V, NULL, 0x02)) {}
-    // std::string val();
+    std::string val();
 };
 
 /// @}

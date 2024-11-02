@@ -68,8 +68,8 @@ std::string Oct::val() {
     return os.str();
 }
 
-// std::string Bin::val() {
-//     std::ostringstream os;
-//     os << std::binary << value;
-//     return os.str();
-// }
+std::string Bin::val() {
+    std::ostringstream os;
+    os << std::bitset<8>(value);
+    return os.str();
+}
