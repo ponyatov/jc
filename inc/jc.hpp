@@ -23,3 +23,25 @@ int main(int argc, char *argv[]);
 /// @brief print command line argument
 void arg(int argc, char *argv);
 /// @}
+
+/// @defgroup graph graph
+/// @{
+
+class Object {
+   public:
+    Object(char *V);
+};
+
+/// @}
+
+/// @defgroup parser parser
+/// @{
+extern int yylex();                    ///< lexer
+extern int yylineno;                   ///< curren line
+extern char *yytext;                   ///< parsed literal
+extern FILE *yyin;                     ///< input file
+extern char *yyfile;                   ///< file name
+extern int yyparse();                  ///< parser
+extern void yyerror(const char *msg);  ///< syntax error callback
+#include "jc.parser.hpp"
+/// @}
