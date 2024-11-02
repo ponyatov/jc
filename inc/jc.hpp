@@ -46,10 +46,21 @@ class Object {
     virtual ~Object();      ///< clean up
 
     /// @name stringify
-    virtual std::string dump() { return head(); }
+
+    /// @brief full text tree dump
+    std::string dump(int depth = 0, std::string prefix = "");
+
+    /// @brief short `<T:V>` header
     virtual std::string head(std::string prefix = "");
+
+    /// @brief tree padding
+    std::string pad(int depth);
+
+    /// @brief type/class tag (lowercased class name)
     virtual std::string tag();
-    virtual std::string val() { return value; }
+
+    /// @brief stringified @ref value
+    virtual std::string val();
 };
 
 class Int : public Object {

@@ -34,6 +34,20 @@ std::string Object::tag() {
     return ret;
 }
 
+std::string Object::val() { return value; }
+
+std::string Object::pad(int depth) {
+    std::ostringstream os;
+    for (int i=0;i<depth;i++) os<<'\t';
+    return os.str();
+}
+
+std::string Object::dump(int depth, std::string prefix) {  //
+    std::ostringstream os;
+    os << std::endl << pad(depth) << head(prefix);
+    return os.str();
+}
+
 std::string Object::head(std::string prefix) {
     std::ostringstream ret;
     ret << prefix;                               // prefix
