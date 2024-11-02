@@ -27,6 +27,8 @@
 int main(int argc, char *argv[]);
 /// @brief print command line argument
 void arg(int argc, char *argv);
+/// @brief ESP32 `main()`
+extern "C" void app_main(void);
 /// @}
 
 /// @defgroup graph graph

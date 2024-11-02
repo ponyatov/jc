@@ -16,7 +16,7 @@ IDFPY  = $(IDF_PATH)/tools/idf.py
 RUSTUP = $(CAR)/bin/rustup
 
 # src
-C += $(wildcard src/*.c*)
+C += $(wildcard src/*.c*) $(wildcard main/*.c*)
 H += $(wildcard inc/*.h*)
 J += $(wildcard lib/*.js)
 M += $(wildcard src/*.ml*)
@@ -26,7 +26,7 @@ CP += tmp/$(MODULE).parser.cpp tmp/$(MODULE).lexer.cpp
 HP += tmp/$(MODULE).parser.hpp
 
 # cfg
-CFLAGS += -Iinc -Itmp -ggdb -O0 -std=gnu++17
+CFLAGS += -Iinc -Itmp -ggdb -O0 -std=gnu++17 -w
 
 # all
 .PHONY: all run jc cgen

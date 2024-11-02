@@ -10,10 +10,7 @@ int main(int argc, char *argv[]) {
         fclose(yyin);
         yyfile = nullptr;
     }
-}
-
-void arg(int argc, char *argv) {  //
-    fprintf(stderr, "argv[%i] = <%s>\n", argc, argv);
+    app_main();
 }
 
 std::list<Object *> Object::pool;
