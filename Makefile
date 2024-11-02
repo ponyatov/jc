@@ -2,10 +2,11 @@
 MODULE = $(notdir $(CURDIR))
 
 # tool
-CURL = curl -L -o
-CF   = clang-format -style=file -i
-OPAM = $(HOME)/bin/opam
-DUNE = $(HOME)/.opam/default/bin/dune
+CURL  = curl -L -o
+CF    = clang-format -style=file -i
+OPAM  = $(HOME)/bin/opam
+DUNE  = $(HOME)/.opam/default/bin/dune
+IDFPY = $(IDF_PATH)/tools/idf.py
 
 # src
 C += $(wildcard src/*.c*)
@@ -85,3 +86,9 @@ $(OPAM):
 
 ref/microrl/README.md:
     git clone -o gh git@github.com:ponyatov/microrl.git ref/microrl
+
+.PHONY: idf
+idf: $(IDF_PATH)/export.sh $(IDFPY)
+.PHONY: esp32
+esp32: $(IDFPY)
+	$< set-target esp32
