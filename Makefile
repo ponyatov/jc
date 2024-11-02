@@ -45,6 +45,9 @@ cpp: bin/$(MODULE) lib/$(MODULE).ini
 .PHONY: config
 config: $(IDFPY)
 	$< menuconfig --style monochrome
+.PHONY: build
+build: $(IDFPY)
+	$< $@
 
 # clean
 .PHONY: clean
