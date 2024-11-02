@@ -38,7 +38,7 @@ std::string Object::val() { return value; }
 
 std::string Object::pad(int depth) {
     std::ostringstream os;
-    for (int i=0;i<depth;i++) os<<'\t';
+    for (int i = 0; i < depth; i++) os << '\t';
     return os.str();
 }
 

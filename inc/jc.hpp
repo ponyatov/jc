@@ -65,12 +65,12 @@ class Object {
 
 class Int : public Object {
    protected:
-    long value;
+    int value;
 
    public:
     Int() : Object() {}
-    Int(long n) : Object() { value = n; }
-    Int(std::string V) : Int(stol(V, NULL, 0x0A)) {}
+    Int(int n) : Int() { value = n; }
+    Int(std::string V) : Int(stoi(V, NULL, 0x0A)) {}
     std::string val() { return std::to_string(value); }
 };
 
