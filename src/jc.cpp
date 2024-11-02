@@ -56,6 +56,8 @@ std::string Object::head(std::string prefix) {
     return ret.str();
 }
 
+std::string Int::val() { return std::to_string(value); }
+
 std::string Hex::val() {
     std::ostringstream os;
     os << std::hex << value;

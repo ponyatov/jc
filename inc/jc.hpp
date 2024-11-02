@@ -66,13 +66,13 @@ class Object {
 
 class Int : public Object {
    protected:
-    int value;
+    long value;
 
    public:
     Int() : Object() {}
-    Int(int n) : Int() { value = n; }
-    Int(std::string V) : Int(stoi(V, NULL, 0x0A)) {}
-    std::string val() { return std::to_string(value); }
+    Int(long n) : Int() { value = n; }
+    Int(std::string V) : Int(stol(V, NULL, 0x0A)) {}
+    std::string val();
 };
 
 class Hex : public Int {
