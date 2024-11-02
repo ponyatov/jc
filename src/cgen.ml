@@ -85,10 +85,28 @@ REPEAT_BRIEF           = NO
   doxy |> close_out
 
 let cmake =
-  let r = open_out "CMakeLists.txt" in
-  let s = open_out "src/CMakeLists.txt" in
-  r |> close_out;
-  s |> close_out
+  let root = open_out "CMakeLists.txt" in
+  let src = open_out "src/CMakeLists.txt" in
+  fprintf root
+    "cmake_minimum_required(VERSION 3.16)
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+project(%s)
+"
+    m;
+  fprintf src
+    "idf_component_register(SRCS \"jc.cpp\"
+                    INCLUDE_DIRS \"../inc\")\"
+";
+  root |> close_out;
+  src |> close_out
+
+let apt =
+  fprintf (open_out "apt.txt")
+    "git make curl
+code meld doxygen clang-format
+g++ flex bison libreadline-dev ragel
+cmake
+"
 
 let _ =
   let cpp = open_out (sprintf "src/%s.cpp" m) in
@@ -99,4 +117,5 @@ let _ =
   cpp |> close_out;
   hpp |> close_out;
   doxy;
-  cmake
+  cmake;
+  apt

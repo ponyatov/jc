@@ -2,5 +2,5 @@
 *.swp
 *.log
 /docs/
-/_build/
+/*build/
 !.gitignore
