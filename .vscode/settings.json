@@ -27,8 +27,9 @@
         "ref/**": true,
     },
     "files.associations": {
-        // "lib/*.ini": "javascript",
-        // ".doxygen": "ini"
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp"
     },
 
     // editor
