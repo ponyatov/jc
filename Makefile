@@ -31,6 +31,16 @@ cgen: $(M) $(D) $(J)
 cpp: bin/$(MODULE) $(J)
 	$^
 
+# esp32
+.PHONY: config
+config: $(IDFPY)
+	$< menuconfig
+
+# clean
+.PHONY: clean
+clean: $(IDFPY)
+	$< clean && rm -rf *build
+
 # format
 .PHONY: format
 format: tmp/format_ml tmp/format_cpp tmp/format_js
