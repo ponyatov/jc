@@ -20,7 +20,7 @@
 
     // files
     "files.exclude": {
-        "_build": true,
+        "*build": true,
         "docs": true,
     },
     "files.watcherExclude": {
