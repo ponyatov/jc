@@ -34,7 +34,7 @@ cpp: bin/$(MODULE) $(J)
 # esp32
 .PHONY: config
 config: $(IDFPY)
-	$< menuconfig
+	$< menuconfig --style monochrome
 
 # clean
 .PHONY: clean
