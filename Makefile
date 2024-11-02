@@ -18,10 +18,13 @@ D += $(wildcard src/dune*) dune* .ocaml*
 CFLAGS += -Iinc -Itmp -ggdb -O0
 
 # all
-.PHONY: all run
+.PHONY: all run jc cgen
 all: $(M) $(D) $(J)
-run: $(M) $(D) $(J)
-	dune exec src/$(MODULE).exe -- $(J)
+run: cgen
+jc: $(M) $(D) $(J)
+	dune exec src/$@.exe -- $(J)
+cgen: $(M) $(D) $(J)
+	dune exec src/$@.exe -- $(J)
 
 .PHONY: cpp
 cpp: bin/$(MODULE) $(J)

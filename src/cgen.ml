@@ -84,6 +84,12 @@ REPEAT_BRIEF           = NO
   |> d;
   doxy |> close_out
 
+let cmake =
+  let r = open_out "CMakeLists.txt" in
+  let s = open_out "src/CMakeLists.txt" in
+  r |> close_out;
+  s |> close_out
+
 let _ =
   let cpp = open_out (sprintf "src/%s.cpp" m) in
   let hpp = open_out (sprintf "inc/%s.hpp" m) in
@@ -92,4 +98,5 @@ let _ =
   main cpp hpp;
   cpp |> close_out;
   hpp |> close_out;
-  doxy
+  doxy;
+  cmake
