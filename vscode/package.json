@@ -1,0 +1,90 @@
+{
+    "name":        "CLI",
+    "displayName": "CLI script",
+    "description": "Command Line Interface / compiler",
+    "version":     "0.0.1",
+    "icon":        "logo.png",
+    "publisher":   "dponyatov",
+    "license":     "MIT",
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "keywords": [
+        "CLI", "FORTH", "REPL", "script", "interpreter", "OCaml"
+    ],
+    "bugs": {
+        "url": "https://gitflic.ru/project/dponyatov/cli/issue"
+    },
+    "homepage": "https://gitflic.ru/project/dponyatov/cli",
+    "repository": {
+        "type": "git",
+        "url" : "https://gitflic.ru/project/dponyatov/cli/issue/tree/dponyatov/vscode"
+    },
+    "activationEvents": [
+        "onLanguage:cli",
+        "workspaceContains:lib/*.ini",
+        "workspaceContains:lib/*.f"
+    ],
+    "extensionDependencies": [
+        "tamasfe.even-better-toml",
+        "ocamllabs.ocaml-platform",
+        "zepalmer.ocaml-indentation"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "grammars": [{
+            "language": "cli",
+            "scopeName": "source.cli",
+            "path": "./cli.tmLanguage.json"
+        }],
+        "commands": [
+            {
+                "command": "cli.hello",
+                "title": "cli: Hello World"
+            },
+            {
+                "command": "cli.repl",
+                "title": "cli: REPL"
+            }
+        ],
+        "keybindings": [{
+            "key": "ctrl+enter",
+            "command": "cli.repl",
+            "when": "editorTextFocus && editorLangId == 'cli'"
+        }],
+        "languages": [{
+            "id": "cli",
+            "aliases": [ "FORTH" ],
+            "extensions": [ ".ini", ".f" ],
+            "configuration": "./cli.languageConfiguration.json"
+        }],
+        "configuration": {
+            "title": "cli",
+            "properties": {
+                "cli.Path": {
+                    "type": "string",
+                    "default": "${workspaceFolder}",
+                    "description": "%ext.configuration.Path%"
+                }}
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "make extension",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "package": "vsce package --baseImagesUrl https://gitflic.ru/project/dponyatov/cli/issue/tree/dponyatov/vscode/",
+        "lint": "eslint src --ext ts",
+        "test": "vscode-test"
+    },
+    "dependencies": {
+        "vscode-nls": "^5.2.0"
+    },
+    "devDependencies": {
+        "vscode-nls-dev": "^4.0.4",
+        "vscode": "1.1.x"
+    }
+}

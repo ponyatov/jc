@@ -22,6 +22,9 @@ J += $(wildcard lib/*.js)
 M += $(wildcard src/*.ml*)
 D += $(wildcard src/dune*) dune* .ocaml*
 
+CP += tmp/$(MODULE).parser.cpp tmp/$(MODULE).lexer.cpp
+HP += tmp/$(MODULE).parser.hpp
+
 # cfg
 CFLAGS += -Iinc -Itmp -ggdb -O0
 
@@ -35,7 +38,7 @@ cgen: $(M) $(D) $(J)
 	dune exec src/$@.exe -- $(J)
 
 .PHONY: cpp
-cpp: bin/$(MODULE) $(J)
+cpp: bin/$(MODULE) lib/$(MODULE).ini
 	$^
 
 # esp32
@@ -70,6 +73,10 @@ tmp/format_js: $(J)
 # rule
 bin/$(MODULE): $(C) $(H) $(CP) $(HP)
 	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
+tmp/$(MODULE).lexer.cpp: src/$(MODULE).lex
+	flex -o $@ $<
+tmp/$(MODULE).parser.cpp: src/$(MODULE).yacc
+	bison -o $@ $<
 
 # doc
 .PHONY: doxy

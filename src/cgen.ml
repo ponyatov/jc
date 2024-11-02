@@ -64,7 +64,7 @@ let doxy =
   fprintf doxy "PROJECT_NAME           = \"%s\"\n" m;
   fprintf doxy "PROJECT_BRIEF          = \"%s\"" about;
   "
-PROJECT_LOGO           = doc/logo.png
+PROJECT_LOGO           = vscode/logo.png
 HTML_OUTPUT            = docs
 OUTPUT_DIRECTORY       =
 INPUT                  = README.md doc src inc
