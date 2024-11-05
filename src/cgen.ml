@@ -34,7 +34,7 @@ let libc cpp hpp =
   |> h
 
 let number cpp hpp =
-  let _c = fprintf cpp in
+  let c = fprintf cpp in
   let h = fprintf hpp in
   "
 /// @defgroup prim primitive
@@ -71,10 +71,32 @@ class Bin : public Int {
 
 /// @}
 "
-  |> h
+  |> h;
+  "
+std::string Int::val() { return std::to_string(value); }
+
+std::string Hex::val() {
+    std::ostringstream os;
+    os << std::hex << value;
+    return os.str();
+}
+
+std::string Oct::val() {
+    std::ostringstream os;
+    os << std::oct << value;
+    return os.str();
+}
+
+std::string Bin::val() {
+    std::ostringstream os;
+    os << std::bitset<8>(value);
+    return os.str();
+}
+"
+  |> c
 
 let obj cpp hpp =
-  let _c = fprintf cpp in
+  let c = fprintf cpp in
   let h = fprintf hpp in
   "
 class Object {
@@ -109,7 +131,48 @@ class Object {
     virtual std::string val();
 };
 "
-  |> h
+  |> h;
+  "
+std::list<Object *> Object::pool;
+
+Object::Object() {
+    ref = 0;
+    pool.push_front(this);
+}
+
+Object::Object(std::string V) : Object() { value = V; }
+
+Object::~Object() { pool.remove(this); }
+
+#include <cxxabi.h>
+std::string Object::tag() {
+    std::string ret = abi::__cxa_demangle(typeid(*this).name(), 0, 0, nullptr);
+    for (char &c : ret) c = tolower(c);
+    return ret;
+}
+
+std::string Object::val() { return value; }
+
+std::string Object::pad(int depth) {
+    std::ostringstream os('\\n');
+    for (int i = 0; i < depth; i++) os << '\\t';
+    return os.str();
+}
+
+std::string Object::dump(int depth, std::string prefix) {
+    std::ostringstream os;
+    os << pad(depth) << head(prefix);
+    return os.str();
+}
+
+std::string Object::head(std::string prefix) {
+    std::ostringstream ret(prefix);
+    ret << '<' << tag() << ':' << val() << '>';  // <T:V>
+    ret << \" @\" << this << \" #\" << ref;          // allocation
+    return ret.str();
+}
+"
+  |> c
 
 let graph cpp hpp =
   let _c = fprintf cpp in

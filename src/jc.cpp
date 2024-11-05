@@ -13,6 +13,10 @@ int main(int argc, char *argv[]) {
     app_main();
 }
 
+void arg(int argc, char *argv) {  //
+    fprintf(stderr, "argv[%i] = <%s>\n", argc, argv);
+}
+
 std::list<Object *> Object::pool;
 
 Object::Object() {
@@ -20,9 +24,9 @@ Object::Object() {
     pool.push_front(this);
 }
 
-Object::~Object() { pool.remove(this); }
-
 Object::Object(std::string V) : Object() { value = V; }
+
+Object::~Object() { pool.remove(this); }
 
 #include <cxxabi.h>
 std::string Object::tag() {
@@ -34,20 +38,19 @@ std::string Object::tag() {
 std::string Object::val() { return value; }
 
 std::string Object::pad(int depth) {
-    std::ostringstream os;
+    std::ostringstream os('\n');
     for (int i = 0; i < depth; i++) os << '\t';
     return os.str();
 }
 
-std::string Object::dump(int depth, std::string prefix) {  //
+std::string Object::dump(int depth, std::string prefix) {
     std::ostringstream os;
-    os << std::endl << pad(depth) << head(prefix);
+    os << pad(depth) << head(prefix);
     return os.str();
 }
 
 std::string Object::head(std::string prefix) {
-    std::ostringstream ret;
-    ret << prefix;                               // prefix
+    std::ostringstream ret(prefix);
     ret << '<' << tag() << ':' << val() << '>';  // <T:V>
     ret << " @" << this << " #" << ref;          // allocation
     return ret.str();
