@@ -28,6 +28,7 @@ let libc cpp hpp =
 #include <iostream>
 #include <sstream>
 #include <list>
+#include <bitset>
 /// @}
 "
   |> h
@@ -173,11 +174,17 @@ extern \"C\" void app_main(void);
 "
   |> h;
   "
-int main(int argc, char *argv[]) {  //
+int main(int argc, char *argv[]) {
     arg(0, argv[0]);
-    for (int i = 1; i < argc; i++) {  //
+    for (int i = 1; i < argc; i++) {
         arg(i, argv[i]);
+        yyfile = argv[i];
+        assert(yyin = fopen(yyfile, \"r\"));
+        yyparse();
+        fclose(yyin);
+        yyfile = nullptr;
     }
+    app_main();
 }
 
 void arg(int argc, char *argv) {  //

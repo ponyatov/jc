@@ -15,6 +15,7 @@
 #include <iostream>
 #include <sstream>
 #include <list>
+#include <bitset>
 /// @}
 
 /// @defgroup main main
