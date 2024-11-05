@@ -38,8 +38,7 @@ extern "C" void app_main(void);
 /// @{
 
 class Object {
-
-    /// @name gargabe collection
+    /// @name garbage collection
     size_t ref;                       ///< reference counter
     static std::list<Object *> pool;  ///< global objects pool
 

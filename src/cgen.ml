@@ -100,8 +100,7 @@ let obj cpp hpp =
   let h = fprintf hpp in
   "
 class Object {
-
-    /// @name gargabe collection
+    /// @name garbage collection
     size_t ref;                       ///< reference counter
     static std::list<Object *> pool;  ///< global objects pool
 
@@ -154,7 +153,7 @@ std::string Object::tag() {
 std::string Object::val() { return value; }
 
 std::string Object::pad(int depth) {
-    std::ostringstream os('\\n');
+    std::ostringstream os(\"\\n\");
     for (int i = 0; i < depth; i++) os << '\\t';
     return os.str();
 }

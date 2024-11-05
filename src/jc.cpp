@@ -38,7 +38,7 @@ std::string Object::tag() {
 std::string Object::val() { return value; }
 
 std::string Object::pad(int depth) {
-    std::ostringstream os('\n');
+    std::ostringstream os("\n");
     for (int i = 0; i < depth; i++) os << '\t';
     return os.str();
 }
