@@ -24,6 +24,37 @@ let libc cpp hpp =
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+
+#include <iostream>
+#include <sstream>
+#include <list>
+/// @}
+"
+  |> h
+
+let skelex cpp hpp =
+  let c = fprintf cpp in
+  let h = fprintf hpp in
+  "/// @defgroup parser parser
+/// @{
+extern int yylex();                    ///< lexer
+extern int yylineno;                   ///< curren line
+extern char *yytext;                   ///< parsed literal
+extern FILE *yyin;                     ///< input file
+extern char *yyfile;                   ///< file name
+extern int yyparse();                  ///< parser
+extern void yyerror(const char *msg);  ///< syntax error callback
+#include \"jc.parser.hpp\"
+#define TOKEN(C, X)               \\
+    {                             \\
+        yylval.o = new C(yytext); \\
+        return X;                 \\
+    }
+#define TOKEN2(C, X)                  \\
+    {                                 \\
+        yylval.o = new C(&yytext[2]); \\
+        return X;                     \\
+    }
 /// @}
 "
   |> h
@@ -39,8 +70,13 @@ let main cpp hpp =
 /// @param[in] argc number of command line arguments
 /// @param[in] argv values (0 = binary program file)
 int main(int argc, char *argv[]);
+
 /// @brief print command line argument
 void arg(int argc, char *argv);
+/// @brief ESP32 `main()`
+extern \"C\" void app_main(void);
+/// @}
+
 /// @}
 "
   |> h;
@@ -91,6 +127,7 @@ let cmake =
     "cmake_minimum_required(VERSION 3.16)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(%s)
+idf_build_set_property(COMPILE_OPTIONS \"-Wno-write-strings\" APPEND)
 "
     m;
   fprintf src
@@ -122,6 +159,7 @@ let _ =
   incl cpp hpp;
   libc cpp hpp;
   main cpp hpp;
+  skelex cpp hpp;
   cpp |> close_out;
   hpp |> close_out;
   doxy;
