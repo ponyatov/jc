@@ -32,10 +32,61 @@ let libc cpp hpp =
 "
   |> h
 
-let skelex cpp hpp =
-  let c = fprintf cpp in
+let obj cpp hpp =
+  let _c = fprintf cpp in
   let h = fprintf hpp in
-  "/// @defgroup parser parser
+  "
+class Object {
+
+    /// @name gargabe collection
+    size_t ref;                       ///< reference counter
+    static std::list<Object *> pool;  ///< global objects pool
+
+   protected:
+    std::string value;  ///< scalar: name, string/number value
+
+   public:
+    /// @name constructor
+    Object();               ///< construct empty
+    Object(std::string V);  ///< construct with name
+    virtual ~Object();      ///< clean up
+
+    /// @name stringify
+
+    /// @brief full text tree dump
+    std::string dump(int depth = 0, std::string prefix = \"\");
+
+    /// @brief short `<T:V>` header
+    virtual std::string head(std::string prefix = \"\");
+    /// @brief tree padding
+    std::string pad(int depth);
+
+    /// @brief type/class tag (lowercased class name)
+    virtual std::string tag();
+
+    /// @brief stringified @ref value
+    virtual std::string val();
+};
+"
+  |> h
+
+let graph cpp hpp =
+  let _c = fprintf cpp in
+  let h = fprintf hpp in
+  "
+/// @defgroup graph graph
+/// @{
+" |> h;
+  obj cpp hpp;
+  "
+/// @}
+" |> h
+
+let skelex cpp hpp =
+  let _c = fprintf cpp in
+  let h = fprintf hpp in
+  "
+/// @defgroup parser parser
 /// @{
 extern int yylex();                    ///< lexer
 extern int yylineno;                   ///< curren line
@@ -159,6 +210,7 @@ let _ =
   incl cpp hpp;
   libc cpp hpp;
   main cpp hpp;
+  graph cpp hpp;
   skelex cpp hpp;
   cpp |> close_out;
   hpp |> close_out;
