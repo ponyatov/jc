@@ -15,7 +15,6 @@
 #include <iostream>
 #include <sstream>
 #include <list>
-#include <bitset>
 /// @}
 
 /// @defgroup main main
@@ -25,16 +24,20 @@
 /// @param[in] argc number of command line arguments
 /// @param[in] argv values (0 = binary program file)
 int main(int argc, char *argv[]);
+
 /// @brief print command line argument
 void arg(int argc, char *argv);
 /// @brief ESP32 `main()`
 extern "C" void app_main(void);
 /// @}
 
+/// @}
+
 /// @defgroup graph graph
 /// @{
 
 class Object {
+
     /// @name gargabe collection
     size_t ref;                       ///< reference counter
     static std::list<Object *> pool;  ///< global objects pool
@@ -55,7 +58,6 @@ class Object {
 
     /// @brief short `<T:V>` header
     virtual std::string head(std::string prefix = "");
-
     /// @brief tree padding
     std::string pad(int depth);
 
@@ -65,6 +67,9 @@ class Object {
     /// @brief stringified @ref value
     virtual std::string val();
 };
+
+/// @defgroup prim primitive
+/// @{
 
 class Int : public Object {
    protected:
@@ -94,6 +99,8 @@ class Bin : public Int {
     Bin(std::string V) : Int(stol(V, NULL, 0x02)) {}
     std::string val();
 };
+
+/// @}
 
 /// @}
 

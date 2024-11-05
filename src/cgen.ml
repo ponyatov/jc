@@ -32,6 +32,46 @@ let libc cpp hpp =
 "
   |> h
 
+let number cpp hpp =
+  let _c = fprintf cpp in
+  let h = fprintf hpp in
+  "
+/// @defgroup prim primitive
+/// @{
+
+class Int : public Object {
+   protected:
+    long value;
+
+   public:
+    Int() : Object() {}
+    Int(long n) : Int() { value = n; }
+    Int(std::string V) : Int(stol(V, NULL, 0x0A)) {}
+    std::string val();
+};
+
+class Hex : public Int {
+   public:
+    Hex(std::string V) : Int(stol(V, NULL, 0x10)) {}
+    std::string val();
+};
+
+class Oct : public Int {
+   public:
+    Oct(std::string V) : Int(stol(V, NULL, 0x08)) {}
+    std::string val();
+};
+
+class Bin : public Int {
+   public:
+    Bin(std::string V) : Int(stol(V, NULL, 0x02)) {}
+    std::string val();
+};
+
+/// @}
+"
+  |> h
+
 let obj cpp hpp =
   let _c = fprintf cpp in
   let h = fprintf hpp in
@@ -78,6 +118,7 @@ let graph cpp hpp =
 /// @{
 " |> h;
   obj cpp hpp;
+  number cpp hpp;
   "
 /// @}
 " |> h
